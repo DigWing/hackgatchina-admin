@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="18px" viewBox="0 0 14 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>twotone-directions_car-24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Copy-2" transform="translate(-185.000000, -157.000000)">
+            <g id="Group-3-Copy-2" transform="translate(164.000000, 144.000000)">
+                <g id="twotone-directions_car-24px" transform="translate(16.000000, 10.000000)">
+                    <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                    <g id="twotone-delete-24px">
+                        <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                        <polygon id="Path" fill="#000000" opacity="0.3" points="8 9 16 9 16 19 8 19"></polygon>
+                        <path d="M15.5,4 L14.5,3 L9.5,3 L8.5,4 L5,4 L5,6 L19,6 L19,4 L15.5,4 Z M6,19 C6,20.1 6.9,21 8,21 L16,21 C17.1,21 18,20.1 18,19 L18,7 L6,7 L6,19 Z M8,9 L16,9 L16,19 L8,19 L8,9 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
