@@ -7,6 +7,8 @@ import { feedbacksApiHOC } from 'components/apiHOCs';
 import FilterButton from 'components/FilterButton';
 import MapMarker from 'components/MapMarker';
 import FeedbackCard from 'components/FeedbackCard';
+import Spoiler from 'components/Spoiler';
+import SwitchButton from 'components/SwitchButton';
 import { buttons, heatMapData } from 'consts';
 
 moment.locale('ru');
@@ -15,8 +17,9 @@ const apiKey = 'AIzaSyBnmv7jvtOTeZ5EF3-3JvSlOqeXEy1DsH4';
 
 import './style.scss';
 
-const HomeScreen = ({ addFilter, filters, feedbacks, filteredFeedbacks }) => (
+const HomeScreen = ({ addFilter, filters, feedbacks, filteredFeedbacks, groupedFeedbacks, filterValue, setFilterValue }) => (
   <div className="home-layout">
+    {console.log(groupedFeedbacks)}
     <span className="home-layout__caption">Заявки</span>
     <div className="home-layout__container">
       <div className="home-layout__feedbacks">
@@ -31,21 +34,56 @@ const HomeScreen = ({ addFilter, filters, feedbacks, filteredFeedbacks }) => (
             ))
           }
         </div>
-        <div className="home-layout__feed">
-          {
-            (filters.length ? filteredFeedbacks : feedbacks).map(feedback => (
-              <FeedbackCard
-                comment={(feedback.comments && feedback.comments.length) ? feedback.comments[0] : ''}
-                date={moment(feedback.createdAt).fromNow()}
-                {...feedback}
-              />
-            ))
-          }
-          {
-            !!(filters.length && !filteredFeedbacks.length)
-            && <div className="home-layout__empty">По данным фильтрам результатов не найдено :(</div>
-          }
-        </div>
+        <SwitchButton
+          input={{ value: filterValue, onChange: setFilterValue }}
+          valueLeft="spoiler"
+          valueRight="default"
+          textLeft="Группы"
+          textRight="Список"
+          value={filterValue}
+        />
+        {
+          filterValue === 'spoiler' ? (
+            <div className="home-layout__feed">
+              {
+                Object.keys(groupedFeedbacks).map(K => (
+                  <Spoiler
+                    initialOpen={groupedFeedbacks[K].length === 1}
+                    title={`Адрес: ${K}`}
+                  >
+                    {groupedFeedbacks[K].map(feedback => (
+                      <FeedbackCard
+                        comment={(feedback.comments && feedback.comments.length) ? feedback.comments[0] : ''}
+                        date={moment(feedback.createdAt).fromNow()}
+                        {...feedback}
+                      />
+                    ))}
+                  </Spoiler>
+                ))
+              }
+              {
+                !!(filters.length && !filteredFeedbacks.length)
+                && <div className="home-layout__empty">По данным фильтрам результатов не найдено :(</div>
+              }
+            </div>
+          ) : (
+            <div className="home-layout__feed">
+              {
+                (filters.length ? filteredFeedbacks : feedbacks).map(feedback => (
+                  <FeedbackCard
+                    comment={(feedback.comments && feedback.comments.length) ? feedback.comments[0] : ''}
+                    date={moment(feedback.createdAt).fromNow()}
+                    {...feedback}
+                  />
+                ))
+              }
+              {
+                !!(filters.length && !filteredFeedbacks.length)
+                && <div className="home-layout__empty">По данным фильтрам результатов не найдено :(</div>
+              }
+            </div>
+          )
+        }
       </div>
       <div className="home-layout__map">
         <GoogleMapReact
@@ -83,13 +121,26 @@ HomeScreen.propTypes = {
 export default compose(
   feedbacksApiHOC(),
   withState('filters', 'setFilters', []),
+  withState('filterValue', 'setFilterValue', 'spoiler'),
   withProps(({ filters, feedbacks }) => ({
     filteredFeedbacks: !filters.length
       ? feedbacks
       : feedbacks.filter((feedback) =>
-          filters.some(filter =>
-            feedback.tags.some(T => T === filter)))
+        filters.some(filter =>
+          feedback.tags.some(T => T === filter)))
   })),
+  withProps(({ filters, filteredFeedbacks, feedbacks }) => ({
+    groupedFeedbacks: (!filters.length ? feedbacks : filteredFeedbacks)
+      .reduce((acc, I) => {
+        if (!acc[I.geo]) {
+          acc[I.geo] = [I];
+        } else {
+          acc[I.geo].push(I);
+        }
+        return acc;
+      }, {}),
+  })),
+
 
   withHandlers({
     addFilter: ({ filters, setFilters }) => (tag) => {

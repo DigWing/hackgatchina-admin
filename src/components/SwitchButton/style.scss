@@ -1,0 +1,67 @@
+@import '_variables';
+
+.switch-button-field {
+  display: flex;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  border: 1px solid rgba(17, 34, 62, 0.15);
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 188px;
+  height: 40px;
+  margin: 10px 0 10px 5px;
+
+  &:hover {
+    border: 1px solid rgba(17, 34, 62, 0.25);
+  }
+
+  &__input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    transition: background 0.3s ease-in,
+    color 0.3s ease-in;
+    justify-content: center;
+    font-size: 14px;
+    color: #000;
+
+    &:last-child {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    &:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    &_active {
+      background: #000BFF;
+      color: #FFFFFF;
+    }
+
+    &_disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  input {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &_disabled {
+    opacity: 0.7;
+
+    input {
+      cursor: not-allowed !important;
+    }
+  }
+}
