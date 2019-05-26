@@ -1,4 +1,4 @@
-const host = 'https://app.financity.cc';
+const host = 'https://api.financity.cc';
 
 export default {
   getFeedbacksUrl: () => `${host}/feedbacks`,
