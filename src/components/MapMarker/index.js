@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import './style.scss';
 
-const MapMarker = () => (
+const MapMarker = ({ onClick }) => (
   <div
+    onClick={onClick}
     className="map-marker"
   />
 );
