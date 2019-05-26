@@ -31,19 +31,21 @@ const HomeScreen = ({ addFilter, filters, feedbacks, filteredFeedbacks }) => (
             ))
           }
         </div>
-        {
-          (filters.length ? filteredFeedbacks : feedbacks).map(feedback => (
-            <FeedbackCard
-              comment={(feedback.comments && feedback.comments.length) ? feedback.comments[0] : ''}
-              date={moment(feedback.createdAt).fromNow()}
-              {...feedback}
-            />
-          ))
-        }
-        {
-          !!(filters.length && !filteredFeedbacks.length)
+        <div className="home-layout__feed">
+          {
+            (filters.length ? filteredFeedbacks : feedbacks).map(feedback => (
+              <FeedbackCard
+                comment={(feedback.comments && feedback.comments.length) ? feedback.comments[0] : ''}
+                date={moment(feedback.createdAt).fromNow()}
+                {...feedback}
+              />
+            ))
+          }
+          {
+            !!(filters.length && !filteredFeedbacks.length)
             && <div className="home-layout__empty">По данным фильтрам результатов не найдено :(</div>
-        }
+          }
+        </div>
       </div>
       <div className="home-layout__map">
         <GoogleMapReact
