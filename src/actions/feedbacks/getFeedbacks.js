@@ -6,9 +6,9 @@ import { feedbacks } from 'schemas';
 
 export default () => requestAsync({
   url: endpoints.getFeedbacksUrl(),
-  transform: response => normalize(response, feedbacks.schemasArray).entities,
+  transform: response => normalize(response.sort((a, b) => (+(new Date(b.createdAt)) - +(new Date(a.createdAt)))), feedbacks.schemasArray).entities,
   transformResult: response => ({
-    feedbacks: normalize(response, feedbacks.schemasArray).result,
+    feedbacks: normalize(response.sort((a, b) => (+(new Date(b.createdAt)) - +(new Date(a.createdAt)))), feedbacks.schemasArray).result,
   }),
   queryKey: endpoints.getFeedbacksUrl(),
   // meta: {
