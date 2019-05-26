@@ -43,8 +43,8 @@ export const buttons = [
     icon: carIcon,
   },
   {
-    id: 'architecture',
-    tag: 'architecture',
+    id: 'building',
+    tag: 'building',
     text: 'Архитектура',
     icon: architectureIcon,
   },

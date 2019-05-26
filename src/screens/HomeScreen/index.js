@@ -55,14 +55,14 @@ const HomeScreen = ({ addFilter, filters, feedbacks, filteredFeedbacks }) => (
           defaultZoom={11}
           heatmapLibrary={true}
           heatmap={{
-            positions: feedbacks.map(M => ({ lat: M.lat, lng: M.lng })),
+            positions: (filters.length ? filteredFeedbacks : feedbacks).map(M => ({ lat: M.lat, lng: M.lng })),
             options: {
               radius: 20,
               opacity: 0.6,
             }
           }}
         >
-          {feedbacks.map(M => (
+          {(filters.length ? filteredFeedbacks : feedbacks).map(M => (
             <MapMarker
               lat={M.lat}
               lng={M.lng}
